@@ -1,15 +1,16 @@
-data1=read.table("C:\\Users\\cr_al\\Documents\\Scolaire\\POLYTECH\\4A\\OPTION - InSI\\JIN83E - Analyse de données\\tp2\\data1TP2.txt", header = TRUE)
-print(data1)
+data1 <- read.delim("https://raw.githubusercontent.com/agusbudi/DataAnalysis/master/data1TP2.txt", header=TRUE, sep="\t")
 
 ## A installer dans le terminal 
 #install.packages("plot3D") 
 library("plot3D")
+library("plot3Drgl")
+library(psych)
 
 ##### QUESTION 1 #####
 
 par(mfrow=c(2,2))
 
-nuage3d <- points3D(data1$Stature, data1$Poids, data1$Taille, pch = 16, main = "Nuage de points en 3D avec la matrice A",
+scatter3D(data1$Stature, data1$Poids, data1$Taille, pch = 16, main = "Nuage de points en 3D avec la matrice A",
        xlab="Stature",
        ylab="Poids",
        zlab="Taille")
@@ -62,38 +63,39 @@ princomp(a)$scores
 
 ##### QUESTION 6 #####
 
-#points3D(princomp(a)$scores[,1], princomp(a)$scores[,2], princomp(a)$scores[,3], pch = 16, main = "Nuage de points en 3D avec princomp")
-
-# reglin_stat_pds <- line(c[,1], c[,2])
-# reglin_stat_taille <- line(c[,1], c[,3])
 # 
-# lm_stat_pds <- lm(data1$Stature~data1$Poids, data=data1)
-# lm_stat_taille <- lm(data1$Stature~data1$Taille, data=data1)
+# val1 <- v_propres$values[1]
+# vect1 <- v_propres$vectors[,1]
+# points3D( (vect1[2]*data1$Poids + vect1[3]*data1$Taille)/(val1-vect1[1]),
+#                   data1$Poids,
+#                   data1$Taille)
 # 
-# lm_stat <- lm(data1$Stature~data1$Poids + data1$Taille, data=data1)
+# f_y=vect1[2]/(val1-vect1[1])
+# f_z=vect1[3]/(val1-vect1[1])
+# 
+# points3D( f_y*data1$Poids + f_z*data1$Taille, data1$Poids, data1$Taille,
+#                   pch = 16)
+# 
 
-#nuage3d$points3D(lm_stat, type="l")
-# plot(reglin_stat_pds)
 
-val1 <- v_propres$values[1]
-vect1 <- v_propres$vectors[,1]
-points3D( (vect1[2]*data1$Poids + vect1[3]*data1$Taille)/(val1-vect1[1]),
-                  data1$Poids,
-                  data1$Taille)
+val1 <- v_propres$values
+vect1 <- v_propres$vectors
+print(c(0,-100*vect1[1,1]))
+scatter3D(x=c(0,-300*vect1[1,1]),y=c(0,-300*vect1[2,1]),z=c(0,-300*vect1[3,1]),add=TRUE,type='l')
 
-f_y=vect1[2]/(val1-vect1[1])
-f_z=vect1[3]/(val1-vect1[1])
-
-points3D( f_y*data1$Poids + f_z*data1$Taille, data1$Poids, data1$Taille,
-                  pch = 16)
 
 
 ##### QUESTION 7 #####
 
-plot(princomp(a)$scores[,1],princomp(a)$scores[,2])
+# plot(princomp(a)$scores[,1],princomp(a)$scores[,2])
 
 
+xi <- c(1:length(C[,1]))
+print(C[,1])
+
+projection = matrix(c(C[,1],C[,2]), ncol=2)
+plot(projection[,1], projection[,2], main="Question 7", xlab="Stature", ylab="Poids", pch=19)
 
 ##### QUESTION 8 #####
 
-
+#Les résultats semblent cohérents par rapport aux deux graphes
