@@ -63,20 +63,6 @@ princomp(a)$scores
 
 ##### QUESTION 6 #####
 
-# 
-# val1 <- v_propres$values[1]
-# vect1 <- v_propres$vectors[,1]
-# points3D( (vect1[2]*data1$Poids + vect1[3]*data1$Taille)/(val1-vect1[1]),
-#                   data1$Poids,
-#                   data1$Taille)
-# 
-# f_y=vect1[2]/(val1-vect1[1])
-# f_z=vect1[3]/(val1-vect1[1])
-# 
-# points3D( f_y*data1$Poids + f_z*data1$Taille, data1$Poids, data1$Taille,
-#                   pch = 16)
-# 
-
 
 val1 <- v_propres$values
 vect1 <- v_propres$vectors
