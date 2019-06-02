@@ -24,7 +24,7 @@ m <- rbind(m1,m2,m3)
 par(mfrow=c(2,2))
 
 plot(-3:9, -3:9, type = "n" , main="nuage de points")
-points(x1,y1, col="blue", pch=19)
+points(x1,y1, col="skyblue", pch=19)
 points(x2,y2, col="green", pch=19)
 points(x3,y3, col="red", pch=19)
 
@@ -106,9 +106,9 @@ for (i in 1:nrow(m)){
     
 }
 
-plot(m, col = c("red", "blue", "green")[z], pch=19, main="nauge par rapport aux classes")
+plot(m, col = c("red", "skyblue", "green")[z], pch=19, main="nuage par rapport aux classes")
 
-  
+
 #### Verification ####
 D <- dist(m, method = "euclidean")
 
@@ -118,14 +118,10 @@ AscHierarchique <- hclust(D, method = "complete") #complete ou ward
 
 cluster = cutree(AscHierarchique, 3)
 
-plot(m, col = c("red", "blue", "green")[cluster], pch=19,main="Vérification")
-
 
 #### Question 3 ####
-fac1 <- factor(cluster)
 
-# # le cutree
-# fac1 <- factor(cutree(h1, h=5))
+fac1 <- factor(cluster)
 
 # le calcul du barycentre de chaque groupe :
 barycentre2 <- function(dfxy, fac){
@@ -150,6 +146,13 @@ barycentre2 <- function(dfxy, fac){
 
 ba1 <- barycentre2(m, fac1)
 
+# Affichage des centres de classes
+points(ba1, pch = 19, col = "darkgreen")
+
+# Affichage sur la vérification
+plot(m, col = c("red", "skyblue", "green")[cluster], pch=19,main="Vérification")
+points(ba1, pch = 19, col = "darkgreen")
+
 # la distance entre le barycentre du nuage de points et les barycentres des classes :
 db1 <- (t(ba1)-colMeans(m))^2
 db1 <- colSums(db1)
@@ -162,14 +165,3 @@ iner.inter <- sum(db1)/sum((t(m)-colMeans(m))^2)
 
 # inertie intra :
 iner.intra <- 1-iner.inter
-
-# ce qui correspond à :
-# install.packages("ade4")
-require(ade4)
-acp1 <- dudi.pca(m, scale=FALSE, scannf=FALSE, nf=ncol(m))
-
-# install.packages("dplyr")
-# library(dplyr)
-# be1 <- between(acp1, fac1, scannf=F, nf=2)
-# 
-# be1$ratio
